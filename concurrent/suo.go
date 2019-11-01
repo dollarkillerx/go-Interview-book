@@ -54,9 +54,9 @@ func one() {
 }
 
 func two() {
-	// 手动初始化 数据库插入初始数据
+	//手动初始化 数据库插入初始数据
 	//data := test_model.Back{Id:"001",Balance:0}
-	//err := pgsql.PgSQL.Create(&data).Error
+	//err := mysql.MySQL.Create(&data).Error
 	//if err != nil {
 	//	panic(err)
 	//}
@@ -74,12 +74,29 @@ func two() {
 		time.Sleep(time.Second)
 
 		data1.Balance += 200
-		err = session.Where("id = ?", "001").Save(&data1).Error
+		err = session.Model(&data1).Where("id = ?", "001").Update("balance", data1.Balance).Error
 		if err != nil {
 			log.Println("更新失败")
 			panic(err)
 		}
 		session.Commit()
+
+		//data1 := test_model.Back{}
+		//err := pgsql.PgSQL.Where("id = ?", "001").Find(&data1).Error
+		//if err != nil {
+		//	log.Println("参数获取失败1")
+		//	panic(err)
+		//}
+		//// 模拟获取后已经发生改变值
+		//go xr()
+		//time.Sleep(time.Second)
+		//
+		//data1.Balance += 200
+		//err = pgsql.PgSQL.Model(&data1).Where("id = ?", "001").Update("balance",data1.Balance).Error
+		//if err != nil {
+		//	log.Println("更新失败")
+		//	panic(err)
+		//}
 
 	}()
 
@@ -97,10 +114,23 @@ func xr() {
 		panic(err)
 	}
 	data1.Balance += 100
-	err = session.Where("id = ?", "001").Save(&data1).Error
+	err = session.Model(&data1).Where("id = ?", "001").Update("balance", data1.Balance).Error
 	if err != nil {
 		log.Println("更新失败")
 		panic(err)
 	}
 	session.Commit()
+
+	//data1 := test_model.Back{}
+	//err := pgsql.PgSQL.Where("id = ?", "001").Find(&data1).Error
+	//if err != nil {
+	//	log.Println("参数获取失败2")
+	//	panic(err)
+	//}
+	//data1.Balance += 100
+	//err = pgsql.PgSQL.Model(&data1).Where("id = ?", "001").Update("balance",data1.Balance).Error
+	//if err != nil {
+	//	log.Println("更新失败")
+	//	panic(err)
+	//}
 }
