@@ -8,7 +8,7 @@ package main
 
 import (
 	"fmt"
-	"go-Interview-book/datasource/pgsql"
+	"go-Interview-book/datasource/mysql"
 	"go-Interview-book/test_model"
 	"log"
 	"strconv"
@@ -62,7 +62,7 @@ func two() {
 	//}
 
 	go func() {
-		session := pgsql.PgSQL.Begin()
+		session := mysql.MySQL.Begin()
 		data1 := test_model.Back{}
 		err := session.Where("id = ?", "001").Find(&data1).Error
 		if err != nil {
@@ -106,7 +106,7 @@ func two() {
 }
 
 func xr() {
-	session := pgsql.PgSQL.Begin()
+	session := mysql.MySQL.Begin()
 	data1 := test_model.Back{}
 	err := session.Where("id = ?", "001").Find(&data1).Error
 	if err != nil {
